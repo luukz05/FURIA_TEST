@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -16,6 +16,7 @@ const Chat = () => {
   const [cookies] = useCookies(["cpf", "fullName"]);
   const { cpf, fullName } = cookies;
   const navigate = useNavigate();
+  const endOfMessagesRef = useRef(null);
   const [news, setNews] = useState([
     "FURIA confirma participação no Major de CS2 com nova line-up e coach internacional!",
     "FURIA Store lança coleção limitada 'Raça Preta' com camisetas, jaquetas e acessórios exclusivos.",
@@ -40,11 +41,17 @@ const Chat = () => {
     }
   };
 
+  // Executa ao montar o componente e faz polling
   useEffect(() => {
     fetchMessages();
-    const interval = setInterval(fetchMessages, 5000); // polling
+    const interval = setInterval(fetchMessages, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  // Faz scroll automático sempre que as mensagens forem atualizadas
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (!newMessage.trim() || isSending) return;
@@ -193,14 +200,14 @@ const Chat = () => {
         </div>
 
         {/* Chat (Direita) */}
-        <div className="w-full ml-1/3 bg-[url('./assets/bg-provisorio.png')] min-h-screen bg-cover bg-fixed bg-no-repeat flex flex-col">
-          <main className=" flex-1 pt-10 px-6 pb-30 flex flex-col gap-6 items-center overflow-y-auto">
+        <div className="w-full ml-1/3 bg-[url('./assets/bg-provisorio.png')] scroll overflow-y-auto min-h-screen bg-cover bg-fixed bg-no-repeat flex flex-col">
+          <main className=" flex-1 pt-10 px-6 pb-30 flex flex-col gap-6 items-center scroll overflow-y-auto">
             {messages.length === 0 ? (
               <p className="text-gray-300 mt-10">
                 Nenhuma mensagem ainda. Seja o primeiro a enviar!
               </p>
             ) : (
-              <div className="w-11/12 flex flex-col gap-5">
+              <div className="w-1/2 flex flex-col ml-[70vh] gap-5">
                 {messages.map((msg, index) => (
                   <div
                     key={index}
@@ -227,6 +234,7 @@ const Chat = () => {
                     </span>
                   </div>
                 ))}
+                <div ref={endOfMessagesRef} />
               </div>
             )}
           </main>
