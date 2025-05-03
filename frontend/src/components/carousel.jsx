@@ -36,7 +36,9 @@ export const Carousel = ({ slides = [] }) => {
       {slides.map((slide, index) => (
         <SwiperSlide key={index}>
           <div className="bg-white/10 p-4 rounded-xl h-180 w-200 mx-auto">
-            <h1 className="text-2xl font-semibold mb-2">{slide.titulo}</h1>
+            <h1 className="text-2xl font-semibold mb-2 uppercase">
+              {slide.titulo}
+            </h1>
             <p className="text-offwhite text-lg">{slide.subtitulo}</p>
             {slide.src && (
               <img

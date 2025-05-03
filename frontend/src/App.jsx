@@ -8,6 +8,7 @@ import Furiometro from "./furiometroPROD";
 import Dashboard from "./dashboard";
 import Profile from "./profile";
 import Quiz from "./quiz";
+import StorePage from "./loja";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/home" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/quiz" element={<Quiz />} />
+      <Route path="/loja" element={<StorePage />} />
     </Routes>
   );
 }

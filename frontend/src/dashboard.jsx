@@ -93,12 +93,12 @@ const HomePage = () => {
                 <img src={avatar1} className="h-10 rounded-full mr-2" />
                 <p className="mr-2">PERFIL</p>
               </button>
-              <button
+              {/* <button
                 onClick={handleLogout}
                 className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center"
               >
                 <IoExit className="text-white text-3xl" />
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="overflow-hidden bg-offblack  py-2 px-4 rounded-b-xl shadow-md">
@@ -177,7 +177,7 @@ const HomePage = () => {
             Quiz Semanal FURIA
           </h2>
 
-          <div className="w-150 h-150 bg-offblack/90 p-6 rounded-xl shadow-lg mb-6 flex flex-col justify-between items-center">
+          <div className="w-150 h-150 bg-offblack/90 p-15 rounded-xl shadow-lg mb-6 flex flex-col justify-between items-center">
             <h3 className="text-xl font-semibold text-ch2 mb-2">
               CS:GO - Jornadas do Major
               <p className="text-offwhite text-sm mt-2">
@@ -189,10 +189,8 @@ const HomePage = () => {
               <h1 className="text-5xl">10 PERGUNTAS</h1>
               <div className="text-offwhite text-sm mt-5">
                 <p>
-                  🏆 Maior pontuação da semana: <strong>Lucas Vargas</strong>{" "}
-                  com 9/10 acertos
+                  🏆 Sua última pontuação: {userData.quiz?.acertos ?? "-"}/10
                 </p>
-                <p>📈 Média da comunidade: 7/10</p>
               </div>
             </div>
 
@@ -204,7 +202,7 @@ const HomePage = () => {
         </section>
 
         <section className="w-full px-8 py-12 bg-black/100 backdrop-blur-md rounded-2xl shadow-inner mb-10">
-          <h2 className="text-3xl font-bold text-ch2 mb-4">
+          <h2 className="text-3xl font-bold text-ch2 mb-4 uppercase">
             Conteúdo para Você
           </h2>
           <p className="text-offwhite mb-6">
@@ -244,11 +242,11 @@ const HomePage = () => {
           />
         </section>
 
-        <section className="w-full px-8 py-12 bg-black/30 backdrop-blur-md rounded-2xl shadow-inner mb-10">
+        <section className="w-full px-8 py-12">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Ranking Global */}
             <div className="w-full lg:w-1/2">
-              <h2 className="text-3xl font-bold text-ch2 mb-4">
+              <h2 className="text-3xl font-bold text-ch2 mb-4 uppercase">
                 Ranking Global
               </h2>
               <p className="text-offwhite mb-6">
@@ -289,7 +287,7 @@ const HomePage = () => {
 
             {/* Progresso de Experiência */}
             <div className="w-full lg:w-1/2 ">
-              <h2 className="text-3xl font-bold text-ch2 mb-4">
+              <h2 className="text-3xl font-bold text-ch2 mb-4 uppercase">
                 Seu Progresso
               </h2>
               <p className="text-offwhite mb-6">

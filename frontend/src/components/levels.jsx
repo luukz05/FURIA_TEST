@@ -7,8 +7,8 @@ const levels = [
   { name: "Pantera de Prata", xpRequired: 1000 },
   { name: "Pantera de Ouro", xpRequired: 1800 },
   { name: "Pantera de Esmeralda", xpRequired: 3000 },
-  { name: "Pantera de Diamante", xpRequired: 5000 },
-  { name: "Pantera Sombria", xpRequired: 7500 },
+  { name: "Pantera de Platina", xpRequired: 5000 },
+  { name: "Pantera de Diamante", xpRequired: 7500 },
   { name: "Pantera Imortal", xpRequired: 10000 },
   { name: "Fúria Suprema", xpRequired: 15000 },
 ];

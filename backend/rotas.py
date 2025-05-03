@@ -9,6 +9,11 @@ import pytesseract
 import re
 import tweepy
 import time
+from datetime import datetime, timezone, timedelta
+
+
+
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -122,10 +127,13 @@ SECRET_KEY = "69420"  # Chave secreta para assinar os tokens JWT
 
 # Função para criar token JWT
 def create_token(user_id):
-    expiration_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
+    expiration_time = datetime.now(timezone.utc) + timedelta(hours=1)
+
+
     return jwt.encode({"user_id": str(user_id), "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Ajuste o caminho conforme necessário
+
 
 # Rota de Registro
 @app.route('/register', methods=['POST'])
@@ -156,6 +164,7 @@ def register():
         "cpf": cpf,
         "moedas": 0,
         "experiencia": 0,
+        "verified": False,
     })
 
     return jsonify({"message": "Usuário registrado com sucesso!"}), 201
@@ -182,12 +191,39 @@ def login():
     mongo.db.sessions.insert_one({
         "user_id": user['_id'],
         "token": token,
-        "created_at": datetime.datetime.utcnow()
+        "created_at": datetime.utcnow()
+
     })
 
     # Enviar o token como cookie HTTPOnly
     response = make_response(jsonify({"message": "Login bem-sucedido", "token": token}), 200)
     return response
+
+@app.route('/quiz/<cpf>', methods=['PATCH'])
+def registrar_quiz(cpf):
+    data = request.json
+
+    # Verifica se score foi enviado
+    if 'acertos' not in data:
+        return jsonify({"message": "Campo 'acertos' é obrigatório."}), 400
+
+    # Verifica se usuário existe
+    user = mongo.db.users.find_one({"cpf": cpf})
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    nova_entrada = {
+        "data": datetime.utcnow().strftime("%Y-%m-%d"),
+        "acertos": data["acertos"]
+    }
+
+    # Adiciona entrada ao array 'quiz'
+    mongo.db.users.update_one(
+        {"cpf": cpf},
+        {"$push": {"quiz": nova_entrada}}
+    )
+
+    return jsonify({"message": "Tentativa de quiz registrada com sucesso!"}), 200
 
 @app.route('/socials/<cpf>', methods=['PATCH'])
 def update_socials(cpf):
@@ -243,6 +279,28 @@ def update_interests(cpf):
         }
     }), 200
 
+@app.route('/verify/<cpf>', methods=['PATCH'])
+def verify_user(cpf):
+    # Verifica se o usuário existe
+    user = mongo.db.users.find_one({"cpf": cpf})
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    # Atualiza verified para True, adiciona 50 de experiência e 15 moedas
+    if not user.get("verified", False):
+        mongo.db.users.update_one(
+            {"cpf": cpf},
+            {
+
+                    "$set": {"verified": True},
+                    "$inc": {"experiencia": 50, "moedas": 15}
+            }
+        )
+        return jsonify({"message": "Usuário verificado com sucesso!"}), 200
+    else:
+        return jsonify({"message": "Usuário já está verificado."}), 200
+
+
 
 @app.route('/user/<cpf>', methods=['GET'])
 def get_user_by_cpf(cpf):
@@ -260,11 +318,15 @@ def get_user_by_cpf(cpf):
         "address": user.get("address", ""),
         "interests": user.get("interests", ""),
         "socials": user.get("socials", ""),
-        "moedas":user.get("moedas"),
-        "experiencia":user.get("experiencia")
+        "moedas": user.get("moedas"),
+        "experiencia": user.get("experiencia"),
+        "verified": user.get("verified"),
+        "quiz": user.get("quiz", [])[-1] if user.get("quiz") else None,  # Último item do array 'quiz'
     }
 
     return jsonify(user_data), 200
+
+
 
 
 @app.route('/ranking', methods=['GET'])

@@ -12,6 +12,7 @@ const SocialForm = () => {
     hltv: "",
     youtube: "",
     instagram: "",
+    twitch: "",
   });
   const [cpf, setCpf] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -157,6 +158,17 @@ const SocialForm = () => {
             value={formData.instagram}
             onChange={handleChange}
             placeholder="LINK DO SEU PERFIL NO INSTAGRAM"
+            className="p-3 rounded-md bg-offblack text-white placeholder-gray-400 focus:outline-none w-full"
+          />
+        </div>
+        <div>
+          <label className="block mb-2 mt-2 text-lg text-left">TWITCH</label>
+          <input
+            type="text"
+            name="twitch"
+            value={formData.twitch}
+            onChange={handleChange}
+            placeholder="LINK DO SEU PERFIL NA TWITCH"
             className="p-3 rounded-md bg-offblack text-white placeholder-gray-400 focus:outline-none w-full"
           />
         </div>

@@ -111,7 +111,7 @@ export default function FanForm() {
         <FaUserAlt /> Bora te conhecer melhor,{" "}
         <span className="text-2xl">{fullName || "Visitante"}</span>!
       </h1>
-      <div className="w-8/20 pl-16 pr-16 pb-16 bg-white/15 backdrop-blur-xl rounded-xl">
+      <div className="w-11/20 pl-16 pr-16 pb-16 bg-white/15 backdrop-blur-xl rounded-xl">
         <form
           onSubmit={handleSubmit}
           className="space-y-6 flex flex-col justify-center"

@@ -6,8 +6,8 @@ import axios from "axios";
 import avatar1 from "./assets/avatar1.png";
 import typo from "./assets/typo.svg";
 import { FiArrowLeft, FiEye, FiEyeOff } from "react-icons/fi"; // Icones para mostrar/ocultar senha
+
 import { BsBagFill } from "react-icons/bs";
-import { IoExit } from "react-icons/io5";
 
 // Perguntas e respostas do quiz
 const questions = [
@@ -87,20 +87,28 @@ const Quiz = () => {
   const handleOptionSelect = (index) => {
     setSelectedOption(index);
   };
-
+  const storedCpf = cookies.load("cpf");
   const handleNextQuestion = () => {
     if (selectedOption === null) return; // Não permite avançar sem selecionar uma opção
 
-    if (selectedOption === questions[currentQuestionIndex].correctAnswer) {
+    const respostaSelecionada =
+      questions[currentQuestionIndex].options[selectedOption];
+    const respostaCorreta = questions[currentQuestionIndex].answer;
+
+    if (respostaSelecionada === respostaCorreta) {
       setScore(score + 1);
     }
 
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // Limpa a opção selecionada para a próxima pergunta
+      setSelectedOption(null);
     } else {
-      // Quiz terminado
-      navigate("/resultado", { state: { score } });
+      const finalScore =
+        respostaSelecionada === respostaCorreta ? score + 1 : score;
+      axios.patch(`http://localhost:5000/quiz/${storedCpf}`, {
+        acertos: finalScore,
+      });
+      navigate("/home");
     }
   };
 
@@ -108,12 +116,30 @@ const Quiz = () => {
     <div className="bg-[url('./assets/bg-provisorio.png')] min-h-screen bg-cover bg-fixed bg-no-repeat text-white">
       <header className="absolute top-0 w-full z-50">
         <div className="flex flex-row items-center justify-between px-6 py-4 bg-white/15 backdrop-blur-xl">
-          <button
-            onClick={() => navigate("/home")}
-            className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center text-offblack"
-          >
-            <FiArrowLeft className="text-white text-3xl" />
-          </button>
+          <div className="flex">
+            <button
+              onClick={() => navigate("/home")}
+              className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center  text-offblack"
+            >
+              <FiArrowLeft className="text-white text-3xl" />
+            </button>
+            <button
+              onClick={() => navigate("/loja")}
+              className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center  text-offblack"
+            >
+              <BsBagFill className="text-white text-3xl" />
+            </button>
+          </div>
+          <img src={typo} className="h-11 object-contain invert" alt="Logo" />
+          <div className="flex">
+            <button
+              onClick={() => navigate("/profile")}
+              className="p-2 rounded-full bg-offwhite  hover:scale-105 transition flex items-center justify-center  text-offblack"
+            >
+              <img src={avatar1} className="h-10 rounded-full mr-2" />
+              <p className="mr-2">PERFIL</p>
+            </button>
+          </div>
         </div>
       </header>
       <div

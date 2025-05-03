@@ -1,0 +1,172 @@
+{
+  "twitter": {
+    "tweets": [
+      {
+        "tweet": "Alguém mais achou o novo mapa do CS2 muito escuro? 😅",
+        "mentions": [],
+        "likes": 14,
+        "retweets": 2
+      },
+      {
+        "tweet": "Mano, o arT da FURIA joga MUITO! 🐆🔥 #FURIA",
+        "mentions": ["FURIAa"],
+        "likes": 230,
+        "retweets": 35
+      },
+      {
+        "tweet": "Fim de semana chegou, hora de grindar ranqueadas 💪",
+        "mentions": [],
+        "likes": 8,
+        "retweets": 0
+      },
+      {
+        "tweet": "KSCERATO carregando a FURIA nas costas ontem. Lenda! 👑",
+        "mentions": ["FURIA"],
+        "likes": 97,
+        "retweets": 12
+      },
+      {
+        "tweet": "Alguém recomenda mouse bom e barato? 🎯",
+        "mentions": [],
+        "likes": 5,
+        "retweets": 0
+      }
+    ],
+    "followed_profiles": [
+      "FURIA",
+      "FalleN",
+      "ESLCS",
+      "Valve",
+      "Gaules",
+      "GameSpot",
+      "kNgV-",
+      "PlayStation"
+    ]
+  },
+  "steam": {
+    "recent_activity": [
+      {
+        "game": "CS2",
+        "hours_played": 4.5,
+        "comment": "Partida tensa contra uns caras da FURIA Academy... GG demais!"
+      },
+      {
+        "game": "Hades",
+        "hours_played": 1.2,
+        "comment": "Satisfatório demais limpar sala com o escudo 💥"
+      },
+      {
+        "game": "CS2",
+        "hours_played": 3.8,
+        "comment": "Testando nova sensi. Só HS hoje 🔥"
+      },
+      {
+        "game": "CS2",
+        "hours_played": 5.1,
+        "comment": "Vi um setup do FalleN e copiei igualzinho kkk"
+      }
+    ]
+  },
+  "hltv": {
+    "posts": [
+      {
+        "post": "A FURIA jogou muito bem contra a G2, especialmente o yuurih!",
+        "comments": 6
+      },
+      {
+        "post": "Será que esse ano algum time BR chega no top 3?",
+        "comments": 3
+      },
+      {
+        "post": "A call do FalleN na inferno foi obra de mestre 🎯",
+        "comments": 12
+      },
+      {
+        "post": "A MIBR ainda tá viva? Vi umas partidas boas ultimamente",
+        "comments": 2
+      }
+    ]
+  },
+  "youtube": {
+    "watched_videos": [
+      {
+        "video_title": "Reagindo à vitória da FURIA contra a NAVI 🔥",
+        "watched_seconds": 634,
+        "liked": true
+      },
+      {
+        "video_title": "Como melhorar mira no CS2 - Dicas práticas",
+        "watched_seconds": 512,
+        "liked": true
+      },
+      {
+        "video_title": "Documentário: A jornada da FURIA no Major 2025",
+        "watched_seconds": 1240,
+        "liked": true
+      },
+      {
+        "video_title": "Setup Tour - Meu novo quarto gamer 🎮",
+        "watched_seconds": 820,
+        "liked": false
+      }
+    ]
+  },
+  "instagram": {
+    "posts": [
+      {
+        "post_caption": "Novo drop da FURIA chegou pesadíssimo 🔥🐆",
+        "liked": true,
+        "commented": "Já garanti a minha 👕"
+      },
+      {
+        "post_caption": "Passeio com a galera hoje, solzão top 😎",
+        "liked": false,
+        "commented": null
+      },
+      {
+        "post_caption": "Arte feita inspirada na line atual da FURIA",
+        "liked": true,
+        "commented": "Ficou animal demais!"
+      },
+      {
+        "post_caption": "Almoço de domingo com a família 👨‍👩‍👧‍👦❤️",
+        "liked": false,
+        "commented": null
+      }
+    ]
+  },
+  "twitch": {
+    "followed_channels": [
+      {
+        "channel_name": "gaules",
+        "live": true,
+        "viewers": 25300,
+        "stream_title": "CS2 com emoção, bora assistir mais um jogaço!"
+      },
+      {
+        "channel_name": "furia",
+        "live": false,
+        "viewers": 0,
+        "stream_title": "Última live: scrims e treino com o coach"
+      },
+      {
+        "channel_name": "yoDa",
+        "live": true,
+        "viewers": 4200,
+        "stream_title": "Leaguezinho insano com os cria 🧠"
+      },
+      {
+        "channel_name": "csbrclips",
+        "live": false,
+        "viewers": 0,
+        "stream_title": "Melhores momentos do Major BR"
+      },
+      {
+        "channel_name": "kcerato",
+        "live": false,
+        "viewers": 0,
+        "stream_title": "Live de chill e CS2 com o pai"
+      }
+    ]
+  }
+}
