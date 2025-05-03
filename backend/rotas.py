@@ -12,15 +12,57 @@ import time
 from datetime import datetime, timezone, timedelta
 
 
-
-
-
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.atge3.mongodb.net/usuarios?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 SECRET_KEY = "69420"  # Chave secreta para assinar os tokens JWT
+
+@app.route('/messages/global', methods=['POST'])
+def send_message():
+    data = request.get_json()
+    sender_name = data.get("senderName")
+    sender_id = data.get("senderId")
+    content = data.get("content")
+
+    if not sender_id or not content:
+        return jsonify({"error": "Campos obrigatórios faltando"}), 400
+
+    # Criando a mensagem e salvando no MongoDB
+    message_data = {
+        "sender_id": sender_id,
+        "sender_name": sender_name,
+        "content": content,
+        "timestamp": datetime.utcnow()
+    }
+
+    # Salvando a mensagem no MongoDB
+    mongo.db.messages.insert_one(message_data)
+
+    return jsonify({
+        "message": "Mensagem enviada com sucesso!",
+        "data": message_data
+    }), 201
+
+# Rota para obter todas as mensagens globais
+@app.route('/messages/global', methods=['GET'])
+def get_messages():
+    try:
+        # Recuperando todas as mensagens da coleção 'messages', ordenadas por timestamp
+        messages = mongo.db.messages.find({}).sort("timestamp", 1)
+
+        # Convertendo as mensagens para lista de dicionários
+        messages_list = []
+        for msg in messages:
+            msg['_id'] = str(msg['_id'])  # Convertendo o ObjectId para string
+            if 'timestamp' in msg and isinstance(msg['timestamp'], datetime):
+                msg['timestamp'] = msg['timestamp'].isoformat()
+            messages_list.append(msg)
+
+        return jsonify(messages_list), 200
+    except Exception as e:
+        return jsonify({"error": "Erro ao buscar mensagens: " + str(e)}), 500
 
 #consumer_key = 'SbZWTfB6aTWa2dPM5HD8MzVMm'
 #consumer_secret = '4rXioKPmZRNuuIaTPAukKZPiznDtaAd2BrdfkYXPXP3nbgIrdz'
@@ -133,7 +175,6 @@ def create_token(user_id):
     return jwt.encode({"user_id": str(user_id), "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Ajuste o caminho conforme necessário
-
 
 # Rota de Registro
 @app.route('/register', methods=['POST'])
@@ -300,8 +341,6 @@ def verify_user(cpf):
     else:
         return jsonify({"message": "Usuário já está verificado."}), 200
 
-
-
 @app.route('/user/<cpf>', methods=['GET'])
 def get_user_by_cpf(cpf):
     # Procurando o usuário no banco de dados com o CPF fornecido
@@ -326,9 +365,6 @@ def get_user_by_cpf(cpf):
 
     return jsonify(user_data), 200
 
-
-
-
 @app.route('/ranking', methods=['GET'])
 def get_ranking():
     try:
@@ -346,7 +382,6 @@ def get_ranking():
     except Exception as e:
         return jsonify({"message": f"Erro ao obter ranking: {str(e)}"}), 500
 
-
 def extract_numbers_from_image(image):
     # Abre a imagem com o PIL
     img = Image.open(image)
@@ -357,7 +392,6 @@ def extract_numbers_from_image(image):
     numbers = re.findall(r'\d{3}\.\d{3}\.\d{3}-\d{2}', extracted_text)
 
     return numbers
-
 
 @app.route('/ocr', methods=['POST'])
 def ocr():
@@ -373,7 +407,6 @@ def ocr():
     print(f"Texto extraído: {extracted_numbers}")
 
     return jsonify({'extracted_numbers': extracted_numbers})
-
 
 # Rota de Logout
 @app.route('/logout', methods=['POST'])

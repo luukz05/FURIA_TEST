@@ -20,7 +20,7 @@ const StorePage = () => {
       name: "Camiseta FURIA",
       description:
         "Camiseta oficial FURIA. Conforto e estilo para o seu dia a dia.",
-      price: 200,
+      price: 20000,
       imageUrl:
         "https://acdn-us.mitiendanube.com/stores/002/332/223/products/casual-frente11-1b7583d3c514c7cadd16884141237486-640-0.png",
     },
@@ -29,14 +29,64 @@ const StorePage = () => {
       name: "Plushie FURICO!",
       description:
         "Ele existe mesmo! O plushie FURICO é o companheiro perfeito para os fãs.",
-      price: 150,
+      price: 15000,
       imageUrl: "https://pbs.twimg.com/media/FR25RzSWYAAQnuW.jpg:large",
     },
     {
       id: 3,
       name: "Blusa FURIA",
       description: "Blusa quentinha com logo FURIA, para você arrasar no look.",
-      price: 100,
+      price: 10000,
+      imageUrl:
+        "https://shop.esl.com/cdn/shop/products/75D5A3F6-C5E7-46E0-982E-032F92F96EDB_-removebg-preview.png?v=1700239001",
+    },
+    {
+      id: 1,
+      name: "Camiseta FURIA",
+      description:
+        "Camiseta oficial FURIA. Conforto e estilo para o seu dia a dia.",
+      price: 20000,
+      imageUrl:
+        "https://acdn-us.mitiendanube.com/stores/002/332/223/products/casual-frente11-1b7583d3c514c7cadd16884141237486-640-0.png",
+    },
+    {
+      id: 2,
+      name: "Plushie FURICO!",
+      description:
+        "Ele existe mesmo! O plushie FURICO é o companheiro perfeito para os fãs.",
+      price: 15000,
+      imageUrl: "https://pbs.twimg.com/media/FR25RzSWYAAQnuW.jpg:large",
+    },
+    {
+      id: 3,
+      name: "Blusa FURIA",
+      description: "Blusa quentinha com logo FURIA, para você arrasar no look.",
+      price: 10000,
+      imageUrl:
+        "https://shop.esl.com/cdn/shop/products/75D5A3F6-C5E7-46E0-982E-032F92F96EDB_-removebg-preview.png?v=1700239001",
+    },
+    {
+      id: 1,
+      name: "Camiseta FURIA",
+      description:
+        "Camiseta oficial FURIA. Conforto e estilo para o seu dia a dia.",
+      price: 20000,
+      imageUrl:
+        "https://acdn-us.mitiendanube.com/stores/002/332/223/products/casual-frente11-1b7583d3c514c7cadd16884141237486-640-0.png",
+    },
+    {
+      id: 2,
+      name: "Plushie FURICO!",
+      description:
+        "Ele existe mesmo! O plushie FURICO é o companheiro perfeito para os fãs.",
+      price: 15000,
+      imageUrl: "https://pbs.twimg.com/media/FR25RzSWYAAQnuW.jpg:large",
+    },
+    {
+      id: 3,
+      name: "Blusa FURIA",
+      description: "Blusa quentinha com logo FURIA, para você arrasar no look.",
+      price: 10000,
       imageUrl:
         "https://shop.esl.com/cdn/shop/products/75D5A3F6-C5E7-46E0-982E-032F92F96EDB_-removebg-preview.png?v=1700239001",
     },

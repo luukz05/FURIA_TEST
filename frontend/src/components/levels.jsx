@@ -44,13 +44,13 @@ export default function UserProgress({ totalXP }) {
   } = getLevelInfo(totalXP);
 
   return (
-    <div className="w-full">
+    <div className="w-full text-2xl">
       <div className="w-full bg-white/10 rounded-xl overflow-hidden">
         <div
-          className="bg-gradient-to-r from-green-500 to-green-950 text-xs font-bold text-white text-center p-2 transition-all duration-500"
+          className="bg-gradient-to-r from-green-500 to-green-950 text-sm font-bold flex flex-row items-center justify-center text-white text-center p-2 transition-all duration-500"
           style={{ width: `${progressPercent}%` }}
         >
-          {currentXP} XP / {nextLevelXP} XP
+          {currentXP} XP
         </div>
       </div>
 
@@ -58,12 +58,12 @@ export default function UserProgress({ totalXP }) {
         Faltam <strong>{remainingXP} XP</strong> para subir de nível!
       </p>
 
-      <p className="mt-2 text-offwhite text-sm">
+      <p className="mt-2 text-offwhite text-base">
         Nível atual: <strong>{currentLevel}</strong> → Próximo:{" "}
         <strong>{nextLevel}</strong>
       </p>
 
-      <div className="mt-6 space-y-2 text-offwhite text-sm grid grid-cols-2 gap-4 ">
+      <div className="mt-6 space-y-2 text-offwhite text-base grid grid-cols-2 gap-4 ">
         {levels.map((level, index) => {
           const nextXP = levels[index + 1]?.xpRequired ?? "∞";
           return (

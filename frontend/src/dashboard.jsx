@@ -12,6 +12,7 @@ import Button from "./components/SubmitButton";
 import { BsBagFill } from "react-icons/bs";
 import { Carousel } from "./components/carousel";
 import UserProgress from "./components/levels";
+import { HiMiniChatBubbleLeftRight } from "react-icons/hi2";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -78,12 +79,21 @@ const HomePage = () => {
       <div className="bg-[url('./assets/bg-provisorio.png')] min-h-screen bg-cover bg-fixed bg-no-repeat text-white">
         <header className="absolute top-0 w-full z-50">
           <div className="flex flex-row items-center justify-between px-6 py-4 bg-white/15 backdrop-blur-xl">
-            <button
-              onClick={() => navigate("/loja")}
-              className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center  text-offblack"
-            >
-              <BsBagFill className="text-white text-3xl" />
-            </button>
+            <div className="flex items-center">
+              <button
+                onClick={() => navigate("/loja")}
+                className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center  text-offblack"
+              >
+                <BsBagFill className="text-white text-3xl" />
+              </button>
+              <button
+                onClick={() => navigate("/chat")}
+                className="p-2 rounded-full hover:scale-105 transition flex items-center justify-center  text-offblack"
+              >
+                <HiMiniChatBubbleLeftRight className="text-white text-3xl" />
+              </button>
+            </div>
+
             <img src={typo} className="h-11 object-contain invert" alt="Logo" />
             <div className="flex">
               <button
@@ -179,7 +189,7 @@ const HomePage = () => {
 
           <div className="w-150 h-150 bg-offblack/90 p-15 rounded-xl shadow-lg mb-6 flex flex-col justify-between items-center">
             <h3 className="text-xl font-semibold text-ch2 mb-2">
-              CS:GO - Jornadas do Major
+              CS:GO - JORNADAS DO MAJOR
               <p className="text-offwhite text-sm mt-2">
                 Você conhece todas as campanhas da FURIA nos Majors? Responda e
                 mostre seu valor!
