@@ -37,7 +37,7 @@ const Profile = () => {
     setFullName(storedName);
 
     axios
-      .get(`https://furia-test-ashy.vercel.app/user/${storedCpf}`)
+      .get(`http://127.0.0.1:5000/user/${storedCpf}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         setMessage(

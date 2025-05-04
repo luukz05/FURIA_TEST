@@ -8,7 +8,7 @@ const Furiometro = () => {
   const [furiosidade, setFuriosidade] = useState(0);
   const handleLogin = () => {
     // Redireciona para o fluxo de OAuth do backend (que já vai retornar o token de autenticação)
-    window.location.href = "https://furia-test-ashy.vercel.app/xin";
+    window.location.href = "http://127.0.0.1:5000/xin";
   };
   const navigate = useNavigate();
   useEffect(() => {
@@ -16,15 +16,11 @@ const Furiometro = () => {
     const fetchData = async () => {
       try {
         // Obter tweets com a palavra "FURIA"
-        const tweetsResponse = await axios.get(
-          "https://furia-test-ashy.vercel.app/xs"
-        );
+        const tweetsResponse = await axios.get("http://127.0.0.1:5000/xs");
         setTweets(tweetsResponse.data);
 
         // Obter a lista de seguidores
-        const followingResponse = await axios.get(
-          "https://furia-test-ashy.vercel.app/xg"
-        );
+        const followingResponse = await axios.get("http://127.0.0.1:5000/xg");
         setFollowing(followingResponse.data);
 
         // Calcular o quão furioso o usuário é baseado na interação

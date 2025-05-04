@@ -31,9 +31,7 @@ const Chat = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(
-        "https://furia-test-ashy.vercel.app/messages/global"
-      );
+      const response = await axios.get("http://127.0.0.1:5000/messages/global");
       const sorted = [...response.data].sort(
         (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
       );
@@ -65,9 +63,7 @@ const Chat = () => {
     if (trimmedMessage.startsWith("/")) {
       if (trimmedMessage === "/steam") {
         try {
-          const res = await axios.get(
-            `https://furia-test-ashy.vercel.app/user/${cpf}`
-          );
+          const res = await axios.get(`http://127.0.0.1:5000/user/${cpf}`);
           const steamLink = res.data?.socials?.steam;
 
           const contentToSend = steamLink
@@ -75,14 +71,11 @@ const Chat = () => {
             : "Você ainda não cadastrou seu perfil da Steam.";
 
           // Envia para o backend
-          await axios.post(
-            "https://furia-test-ashy.vercel.app/messages/global",
-            {
-              senderId: cpf,
-              senderName: fullName,
-              content: contentToSend,
-            }
-          );
+          await axios.post("http://127.0.0.1:5000/messages/global", {
+            senderId: cpf,
+            senderName: fullName,
+            content: contentToSend,
+          });
 
           // Atualiza localmente
           setMessages((prev) => [
@@ -98,14 +91,11 @@ const Chat = () => {
           console.error("Erro ao buscar perfil:", error);
           const fallbackMsg = "Erro ao buscar seu perfil da Steam.";
 
-          await axios.post(
-            "https://furia-test-ashy.vercel.app/messages/global",
-            {
-              senderId: cpf,
-              senderName: fullName,
-              content: fallbackMsg,
-            }
-          );
+          await axios.post("http://127.0.0.1:5000/messages/global", {
+            senderId: cpf,
+            senderName: fullName,
+            content: fallbackMsg,
+          });
 
           setMessages((prev) => [
             ...prev,
@@ -131,10 +121,7 @@ const Chat = () => {
     };
 
     try {
-      await axios.post(
-        "https://furia-test-ashy.vercel.app/messages/global",
-        messageData
-      );
+      await axios.post("http://127.0.0.1:5000/messages/global", messageData);
       setMessages((prev) => [
         ...prev,
         {

@@ -43,7 +43,7 @@ const HomePage = () => {
     }
 
     axios
-      .get("https://furia-test-ashy.vercel.app/ranking")
+      .get("http://127.0.0.1:5000/ranking")
       .then((response) => setRanking(response.data.ranking))
       .catch((error) => console.error("Erro ao buscar ranking:", error));
 
@@ -51,7 +51,7 @@ const HomePage = () => {
     setFullName(storedName);
 
     axios
-      .get(`https://furia-test-ashy.vercel.app/user/${storedCpf}`)
+      .get(`http://127.0.0.1:5000/user/${storedCpf}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         setMessage(
