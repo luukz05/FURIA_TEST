@@ -2,16 +2,15 @@ from flask import Flask, request, jsonify, make_response
 from flask_pymongo import PyMongo
 import bcrypt
 import jwt
-import datetime
 from flask_cors import CORS
 from PIL import Image
 import pytesseract
 import re
-import tweepy
-import time
+from datetime import datetime, timezone, timedelta
+
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["https://furiaqg.netlify.app/", "http://localhost:5173"])
 app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.atge3.mongodb.net/usuarios?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
@@ -121,9 +120,105 @@ SECRET_KEY = "69420"  # Chave secreta para assinar os tokens JWT
 #      "tweets": result
 #  }), 200
 
+@app.route('/messages/global', methods=['POST'])
+def send_message():
+    data = request.get_json()
+    sender_name = data.get("senderName")
+    sender_id = data.get("senderId")
+    content = data.get("content")
+
+    if not sender_id or not content:
+        return jsonify({"error": "Campos obrigatórios faltando"}), 400
+
+    # Criando a mensagem e salvando no MongoDB
+    message_data = {
+        "sender_id": sender_id,
+        "sender_name": sender_name,
+        "content": content,
+        "timestamp": datetime.utcnow()
+    }
+
+    # Salvando a mensagem no MongoDB
+    mongo.db.messages.insert_one(message_data)
+
+    return jsonify({
+        "message": "Mensagem enviada com sucesso!",
+        "data": message_data
+    }), 201
+
+
+# Rota para obter todas as mensagens globais
+@app.route('/messages/global', methods=['GET'])
+def get_messages():
+    try:
+        # Recuperando todas as mensagens da coleção 'messages', ordenadas por timestamp
+        messages = mongo.db.messages.find({}).sort("timestamp", 1)
+
+        # Convertendo as mensagens para lista de dicionários
+        messages_list = []
+        for msg in messages:
+            msg['_id'] = str(msg['_id'])  # Convertendo o ObjectId para string
+            if 'timestamp' in msg and isinstance(msg['timestamp'], datetime):
+                msg['timestamp'] = msg['timestamp'].isoformat()
+            messages_list.append(msg)
+
+        return jsonify(messages_list), 200
+    except Exception as e:
+        return jsonify({"error": "Erro ao buscar mensagens: " + str(e)}), 500
+
+
+@app.route('/quiz/<cpf>', methods=['PATCH'])
+def registrar_quiz(cpf):
+    data = request.json
+
+    # Verifica se score foi enviado
+    if 'acertos' not in data:
+        return jsonify({"message": "Campo 'acertos' é obrigatório."}), 400
+
+    # Verifica se usuário existe
+    user = mongo.db.users.find_one({"cpf": cpf})
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    nova_entrada = {
+        "data": datetime.utcnow().strftime("%Y-%m-%d"),
+        "acertos": data["acertos"]
+    }
+
+    # Adiciona entrada ao array 'quiz'
+    mongo.db.users.update_one(
+        {"cpf": cpf},
+        {"$push": {"quiz": nova_entrada}}
+    )
+
+    return jsonify({"message": "Tentativa de quiz registrada com sucesso!"}), 200
+
+
+@app.route('/verify/<cpf>', methods=['PATCH'])
+def verify_user(cpf):
+    # Verifica se o usuário existe
+    user = mongo.db.users.find_one({"cpf": cpf})
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
+
+    # Atualiza verified para True, adiciona 50 de experiência e 15 moedas
+    if not user.get("verified", False):
+        mongo.db.users.update_one(
+            {"cpf": cpf},
+            {
+
+                "$set": {"verified": True},
+                "$inc": {"experiencia": 50, "moedas": 15}
+            }
+        )
+        return jsonify({"message": "Usuário verificado com sucesso!"}), 200
+    else:
+        return jsonify({"message": "Usuário já está verificado."}), 200
+
 # Função para criar token JWT
 def create_token(user_id):
-    expiration_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
+    expiration_time = datetime.now(timezone.utc) + timedelta(hours=1)
+
     return jwt.encode({"user_id": str(user_id), "exp": expiration_time}, SECRET_KEY, algorithm="HS256")
 
 
@@ -191,7 +286,7 @@ def login():
     mongo.db.sessions.insert_one({
         "user_id": user['_id'],
         "token": token,
-        "created_at": datetime.datetime.utcnow()
+        "created_at": datetime.utcnow()
     })
 
     # Enviar o token como cookie HTTPOnly
@@ -272,7 +367,9 @@ def get_user_by_cpf(cpf):
         "interests": user.get("interests", ""),
         "socials": user.get("socials", ""),
         "moedas": user.get("moedas"),
-        "experiencia": user.get("experiencia")
+        "experiencia": user.get("experiencia"),
+        "verified": user.get("verified"),
+        "quiz": user.get("quiz", [])[-1] if user.get("quiz") else None,  # Último item do array 'quiz'
     }
 
     return jsonify(user_data), 200
