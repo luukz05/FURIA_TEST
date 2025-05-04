@@ -106,7 +106,7 @@ const Quiz = () => {
       const finalScore =
         respostaSelecionada === respostaCorreta ? score + 1 : score;
       axios.patch(
-        `https://furiatest-production.up.railway.app//quiz/${storedCpf}`,
+        `https://furiatest-production.up.railway.app/quiz/${storedCpf}`,
         {
           acertos: finalScore,
         }

@@ -42,7 +42,7 @@ export default function Cadastro() {
     } else {
       try {
         const response = await axios.post(
-          "https://furiatest-production.up.railway.app//register",
+          "https://furiatest-production.up.railway.app/register",
           {
             fullName,
             email,

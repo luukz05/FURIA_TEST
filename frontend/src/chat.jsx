@@ -32,7 +32,7 @@ const Chat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        "https://furiatest-production.up.railway.app//messages/global"
+        "https://furiatest-production.up.railway.app/messages/global"
       );
       const sorted = [...response.data].sort(
         (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
@@ -66,7 +66,7 @@ const Chat = () => {
       if (trimmedMessage === "/steam") {
         try {
           const res = await axios.get(
-            `https://furiatest-production.up.railway.app//user/${cpf}`
+            `https://furiatest-production.up.railway.app/user/${cpf}`
           );
           const steamLink = res.data?.socials?.steam;
 
@@ -76,7 +76,7 @@ const Chat = () => {
 
           // Envia para o backend
           await axios.post(
-            "https://furiatest-production.up.railway.app//messages/global",
+            "https://furiatest-production.up.railway.app/messages/global",
             {
               senderId: cpf,
               senderName: fullName,
@@ -99,7 +99,7 @@ const Chat = () => {
           const fallbackMsg = "Erro ao buscar seu perfil da Steam.";
 
           await axios.post(
-            "https://furiatest-production.up.railway.app//messages/global",
+            "https://furiatest-production.up.railway.app/messages/global",
             {
               senderId: cpf,
               senderName: fullName,
@@ -132,7 +132,7 @@ const Chat = () => {
 
     try {
       await axios.post(
-        "https://furiatest-production.up.railway.app//messages/global",
+        "https://furiatest-production.up.railway.app/messages/global",
         messageData
       );
       setMessages((prev) => [

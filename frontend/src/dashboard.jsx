@@ -43,7 +43,7 @@ const HomePage = () => {
     }
 
     axios
-      .get("https://furiatest-production.up.railway.app//ranking")
+      .get("https://furiatest-production.up.railway.app/ranking")
       .then((response) => setRanking(response.data.ranking))
       .catch((error) => console.error("Erro ao buscar ranking:", error));
 
@@ -51,7 +51,7 @@ const HomePage = () => {
     setFullName(storedName);
 
     axios
-      .get(`https://furiatest-production.up.railway.app//user/${storedCpf}`)
+      .get(`https://furiatest-production.up.railway.app/user/${storedCpf}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         setMessage(

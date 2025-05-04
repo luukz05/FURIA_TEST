@@ -80,7 +80,7 @@ export default function FanForm() {
 
     try {
       const response = await axios.patch(
-        `https://furiatest-production.up.railway.app//users/${cpf}`,
+        `https://furiatest-production.up.railway.app/users/${cpf}`,
         {
           interests: formData,
         }

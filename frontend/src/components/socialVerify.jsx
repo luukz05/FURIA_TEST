@@ -55,7 +55,7 @@ const ContarPalavraFuria = ({
         setIsModalOpen(true);
 
         axios
-          .patch(`https://furiatest-production.up.railway.app//verify/${cpf}`)
+          .patch(`https://furiatest-production.up.railway.app/verify/${cpf}`)
           .then((response) => {
             setUserData?.(response.data);
           })

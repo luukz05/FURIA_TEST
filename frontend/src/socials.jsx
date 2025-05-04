@@ -76,7 +76,7 @@ const SocialForm = () => {
 
     try {
       const response = await axios.patch(
-        `https://furiatest-production.up.railway.app//socials/${cpf}`,
+        `https://furiatest-production.up.railway.app/socials/${cpf}`,
         { socials: formData }
       );
 

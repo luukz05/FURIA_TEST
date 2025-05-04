@@ -30,7 +30,7 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
 
     try {
       const response = await axios.post(
-        "https://furiatest-production.up.railway.app//ocr",
+        "https://furiatest-production.up.railway.app/ocr",
         formData,
         {
           headers: {

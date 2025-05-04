@@ -8,7 +8,7 @@ const Furiometro = () => {
   const [furiosidade, setFuriosidade] = useState(0);
   const handleLogin = () => {
     // Redireciona para o fluxo de OAuth do backend (que já vai retornar o token de autenticação)
-    window.location.href = "https://furiatest-production.up.railway.app//xin";
+    window.location.href = "https://furiatest-production.up.railway.app/xin";
   };
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,13 +17,13 @@ const Furiometro = () => {
       try {
         // Obter tweets com a palavra "FURIA"
         const tweetsResponse = await axios.get(
-          "https://furiatest-production.up.railway.app//xs"
+          "https://furiatest-production.up.railway.app/xs"
         );
         setTweets(tweetsResponse.data);
 
         // Obter a lista de seguidores
         const followingResponse = await axios.get(
-          "https://furiatest-production.up.railway.app//xg"
+          "https://furiatest-production.up.railway.app/xg"
         );
         setFollowing(followingResponse.data);
 

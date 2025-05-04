@@ -37,7 +37,7 @@ const Profile = () => {
     setFullName(storedName);
 
     axios
-      .get(`https://furiatest-production.up.railway.app//user/${storedCpf}`)
+      .get(`https://furiatest-production.up.railway.app/user/${storedCpf}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         setMessage(
