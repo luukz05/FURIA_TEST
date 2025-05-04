@@ -12,3 +12,4 @@ flask-cors==5.0.1
 bcrypt==4.3.0
 Pillow==11.2.1
 tweepy @ git+https://github.com/tweepy/tweepy.git@db28c0e84826485755eb7fcef0c30f75395dff5f
+PyJWT==2.8.0

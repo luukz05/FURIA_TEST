@@ -270,37 +270,50 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    cpf = data.get('cpf')
-    password = data.get('password')
+    try:
+        data = request.get_json()
+        cpf = data.get('cpf')
+        password = data.get('password')
+        print("CPF recebido:", cpf)
 
-    user = mongo.db.users.find_one({"cpf": cpf})
-    if not user:
-        return jsonify({"message": "Usuário não encontrado."}), 404
+        user = mongo.db.users.find_one({"cpf": cpf})
+        if not user:
+            print("Usuário não encontrado")
+            return jsonify({"message": "Usuário não encontrado."}), 404
 
-    if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        return jsonify({"message": "Senha incorreta."}), 400
+        print("Usuário encontrado:", user.get('name', 'Sem nome'))
 
-    token = create_token(user['_id'])
+        stored_hash = user['password'].encode('utf-8') if isinstance(user['password'], str) else user['password']
+        if not bcrypt.checkpw(password.encode('utf-8'), stored_hash):
+            print("Senha incorreta")
+            return jsonify({"message": "Senha incorreta."}), 400
 
-    mongo.db.sessions.insert_one({
-        "user_id": user['_id'],
-        "token": token,
-        "created_at": datetime.utcnow()
-    })
+        token = create_token(user['_id'])
+        print("Token gerado:", token)
 
-    response = make_response(jsonify({"message": "Login bem-sucedido"}), 200)
+        mongo.db.sessions.insert_one({
+            "user_id": user['_id'],
+            "token": token,
+            "created_at": datetime.utcnow()
+        })
+        print("Sessão salva")
 
-    response.set_cookie(
-        'token',
-        token,
-        httponly=True,
-        secure=True,
-        samesite='None',
-        max_age=60 * 60 * 24 * 7
-    )
+        response = make_response(jsonify({"message": "Login bem-sucedido"}), 200)
+        response.set_cookie(
+            'token',
+            token,
+            httponly=True,
+            secure=True,  # Tente False temporariamente se estiver com problema
+            samesite='None',
+            max_age=60 * 60 * 24 * 7
+        )
+        print("Cookie setado")
+        return response
 
-    return response
+    except Exception as e:
+        print("Erro no login:", str(e))
+        return jsonify({"message": "Erro interno no servidor"}), 500
+
 
 
 
