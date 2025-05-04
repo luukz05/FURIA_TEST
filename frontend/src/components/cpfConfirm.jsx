@@ -9,7 +9,6 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Verificar se o tipo de arquivo é uma imagem PNG ou JPEG
       const validTypes = ["image/png", "image/jpeg"];
       if (!validTypes.includes(file.type)) {
         alert("Por favor, envie uma imagem válida (PNG ou JPEG).");
@@ -25,7 +24,6 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
       return;
     }
 
-    // Enviar a imagem e o CPF para o serviço de validação
     const formData = new FormData();
     formData.append("cpf", cpf);
     formData.append("image", imageFile);
@@ -37,21 +35,25 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
         },
       });
 
-      // Recuperando os números extraídos
       const extractedNumbers = response.data.extracted_numbers;
 
-      // Verifica se o CPF fornecido está na lista dos números extraídos
-      if (extractedNumbers.includes(cpf)) {
-        setIsImageValid(true);
-        setConfirmationStatus("Identificação confirmada com sucesso!");
-      } else {
-        setIsImageValid(false);
-        setConfirmationStatus("A foto não corresponde ao CPF.");
-      }
+      // Função para normalizar CPF (remove tudo que não é número)
+      const normalizeCpf = (cpfStr) => cpfStr.replace(/\D/g, "");
 
-      // Chamar o callback quando a validação for concluída, após atualizar o estado
+      const normalizedInputCpf = normalizeCpf(cpf);
+      const normalizedExtractedCpfs = extractedNumbers.map(normalizeCpf);
+
+      const isValid = normalizedExtractedCpfs.includes(normalizedInputCpf);
+
+      setIsImageValid(isValid);
+      setConfirmationStatus(
+        isValid
+          ? "Identificação confirmada com sucesso!"
+          : "A foto não corresponde ao CPF."
+      );
+
       if (onValidationComplete) {
-        onValidationComplete(isImageValid);
+        onValidationComplete(isValid);
       }
     } catch (error) {
       console.error("Erro na validação da imagem", error);
@@ -80,7 +82,6 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
         Confirmar Identidade
       </button>
 
-      {/* Exibindo o status da validação abaixo do input */}
       {confirmationStatus && (
         <div
           className={`mt-4 text-center text-lg ${

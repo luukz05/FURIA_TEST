@@ -36,31 +36,36 @@ export default function Cadastro() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/register",
-        {
-          fullName,
-          email,
-          password,
-          address,
-          cpf: cpf.replace(/\D/g, ""), // Envia o CPF sem formatação
-          interests,
-        },
-        { withCredentials: true }
-      );
+    if (!isCpfValid) {
+      setMessage("CPF inválido. Verifique e tente novamente.");
+      return;
+    } else {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:5000/register",
+          {
+            fullName,
+            email,
+            password,
+            address,
+            cpf: cpf.replace(/\D/g, ""), // Envia o CPF sem formatação
+            interests,
+          },
+          { withCredentials: true }
+        );
 
-      if (response.status === 201) {
-        setMessage("Usuário registrado com sucesso!");
-        // Salvar cookies
-        cookie.save("fullName", fullName, { path: "/" });
-        cookie.save("cpf", cpf.replace(/\D/g, ""), { path: "/" });
-        navigate("/fanform");
+        if (response.status === 201) {
+          setMessage("Usuário registrado com sucesso!");
+          // Salvar cookies
+          cookie.save("fullName", fullName, { path: "/" });
+          cookie.save("cpf", cpf.replace(/\D/g, ""), { path: "/" });
+          navigate("/fanform");
+        }
+      } catch (error) {
+        setMessage(
+          error.response?.data?.message || "Erro no registro. Tente novamente."
+        );
       }
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message || "Erro no registro. Tente novamente."
-      );
     }
   };
 
