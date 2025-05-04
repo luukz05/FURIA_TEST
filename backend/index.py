@@ -129,7 +129,7 @@ def create_token(user_id):
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Ajuste o caminho conforme necessário
 
-@app.route('/test', methods=['GET'])
+@app.route('/', methods=['GET'])
 def hello_world():
     return 'Hello, World!'
 
