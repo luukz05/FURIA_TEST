@@ -9,7 +9,7 @@ import re
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True,  resources={r"/*": {"origins": "*"}})
 app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.atge3.mongodb.net/usuarios?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
