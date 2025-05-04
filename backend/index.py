@@ -8,7 +8,6 @@ import pytesseract
 import re
 from datetime import datetime, timezone, timedelta
 
-
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=["https://furiaqg.netlify.app", "http://localhost:5173"])
 app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.atge3.mongodb.net/usuarios?retryWrites=true&w=majority"
