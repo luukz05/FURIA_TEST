@@ -9,7 +9,11 @@ import re
 from datetime import datetime, timezone, timedelta
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True,  resources={r"/*": {"origins": "*"}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": [
+    "https://furiaqg.netlify.app",
+    "http://localhost:5173"
+]}})
+
 app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.atge3.mongodb.net/usuarios?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
@@ -263,66 +267,73 @@ def register():
     return jsonify({"message": "Usuário registrado com sucesso!"}), 201
 
 
-# Rota de Login
-# @app.route('/login', methods=['POST'])
-# def login():
-#     data = request.get_json()
-#     cpf = data.get('cpf')
-#     password = data.get('password')
-#
-#     user = mongo.db.users.find_one({"cpf": cpf})
-#     if not user:
-#         return jsonify({"message": "Usuário não encontrado."}), 404
-#
-#     # Verificar senha
-#     if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-#         return jsonify({"message": "Senha incorreta."}), 400
-#
-#     # Criar e salvar o token
-#     token = create_token(user['_id'])
-#
-#     # Armazenar o token na sessão do banco de dados
-#     mongo.db.sessions.insert_one({
-#         "user_id": user['_id'],
-#         "token": token,
-#         "created_at": datetime.utcnow()
-#     })
-#
-#     # Enviar o token como cookie HTTPOnly
-#     response = make_response(jsonify({"message": "Login bem-sucedido", "token": token}), 200)
-#     return response
-
 
 @app.route('/login', methods=['POST'])
 def login():
-    try:
-        data = request.get_json()
-        print("Dados recebidos:", data)  # Log dos dados recebidos
+    data = request.get_json()
+    cpf = data.get('cpf')
+    password = data.get('password')
 
-        if not data or 'cpf' not in data or 'password' not in data:
-            print("Campos faltando no request:", data)
-            return jsonify({'error': 'CPF e senha são obrigatórios'}), 400
+    user = mongo.db.users.find_one({"cpf": cpf})
+    if not user:
+        return jsonify({"message": "Usuário não encontrado."}), 404
 
-        # Conectar ao MongoDB e buscar o usuário
-        user = mongo.db.users.find_one({'cpf': data['cpf']})
-        print("Usuário encontrado:", user)  # Log do usuário encontrado no banco
+    if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        return jsonify({"message": "Senha incorreta."}), 400
 
-        if not user:
-            return jsonify({'error': 'Usuário não encontrado'}), 404
+    token = create_token(user['_id'])
 
-        # Verificar senha
-        if not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
-            return jsonify({'error': 'Senha incorreta'}), 401
+    mongo.db.sessions.insert_one({
+        "user_id": user['_id'],
+        "token": token,
+        "created_at": datetime.utcnow()
+    })
 
-        # Gerar token JWT
-        token = jwt.encode({'cpf': user['cpf']}, 'segredo', algorithm='HS256')
-        print("Token gerado:", token)  # Log do token gerado
+    response = make_response(jsonify({"message": "Login bem-sucedido"}), 200)
 
-        return jsonify({'token': token})
+    response.set_cookie(
+        'token',
+        token,
+        httponly=True,
+        secure=True,
+        samesite='None',
+        max_age=60 * 60 * 24 * 7
+    )
 
-    except Exception as e:
-        print("Erro no login:", e)  # Log de erro completo
-        return jsonify({'error': 'Erro interno'}), 500
+    return response
+
+
+
+# @app.route('/login', methods=['POST'])
+# def login():
+#     try:
+#         data = request.get_json()
+#         print("Dados recebidos:", data)  # Log dos dados recebidos
+#
+#         if not data or 'cpf' not in data or 'password' not in data:
+#             print("Campos faltando no request:", data)
+#             return jsonify({'error': 'CPF e senha são obrigatórios'}), 400
+#
+#         # Conectar ao MongoDB e buscar o usuário
+#         user = mongo.db.users.find_one({'cpf': data['cpf']})
+#         print("Usuário encontrado:", user)  # Log do usuário encontrado no banco
+#
+#         if not user:
+#             return jsonify({'error': 'Usuário não encontrado'}), 404
+#
+#         # Verificar senha
+#         if not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
+#             return jsonify({'error': 'Senha incorreta'}), 401
+#
+#         # Gerar token JWT
+#         token = jwt.encode({'cpf': user['cpf']}, 'segredo', algorithm='HS256')
+#         print("Token gerado:", token)  # Log do token gerado
+#
+#         return jsonify({'token': token})
+#
+#     except Exception as e:
+#         print("Erro no login:", e)  # Log de erro completo
+#         return jsonify({'error': 'Erro interno'}), 500
 
 
 @app.route('/socials/<cpf>', methods=['PATCH'])
