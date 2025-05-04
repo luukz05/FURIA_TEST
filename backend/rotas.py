@@ -167,6 +167,13 @@ def get_messages():
   #      "tweets": result
   #  }), 200
 
+@app.route('/test')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 # Função para criar token JWT
 def create_token(user_id):
     expiration_time = datetime.now(timezone.utc) + timedelta(hours=1)
