@@ -38,7 +38,7 @@ export default function Cadastro() {
 
     try {
       const response = await axios.post(
-        "https://furiatest-production.up.railway.app/register",
+        "http://127.0.0.1:5000/register",
         {
           fullName,
           email,

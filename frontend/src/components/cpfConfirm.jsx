@@ -31,15 +31,11 @@ const CpfValidationForm = ({ cpf, onValidationComplete }) => {
     formData.append("image", imageFile);
 
     try {
-      const response = await axios.post(
-        "https://furiatest-production.up.railway.app/ocr",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("http://127.0.0.1:5000/ocr", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       // Recuperando os números extraídos
       const extractedNumbers = response.data.extracted_numbers;

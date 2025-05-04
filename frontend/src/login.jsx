@@ -33,7 +33,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "https://furiatest-production.up.railway.app/login",
+        "http://127.0.0.1:5000/login",
         {
           cpf: cpf.replace(/\D/g, ""),
           password,

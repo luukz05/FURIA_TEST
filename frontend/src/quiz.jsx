@@ -105,12 +105,9 @@ const Quiz = () => {
     } else {
       const finalScore =
         respostaSelecionada === respostaCorreta ? score + 1 : score;
-      axios.patch(
-        `https://furiatest-production.up.railway.app/quiz/${storedCpf}`,
-        {
-          acertos: finalScore,
-        }
-      );
+      axios.patch(`http://127.0.0.1:5000/quiz/${storedCpf}`, {
+        acertos: finalScore,
+      });
       navigate("/home");
     }
   };
