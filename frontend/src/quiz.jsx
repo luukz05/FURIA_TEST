@@ -105,7 +105,7 @@ const Quiz = () => {
     } else {
       const finalScore =
         respostaSelecionada === respostaCorreta ? score + 1 : score;
-      axios.patch(`http://localhost:5000/quiz/${storedCpf}`, {
+      axios.patch(`https://furia-test-ashy.vercel.app/quiz/${storedCpf}`, {
         acertos: finalScore,
       });
       navigate("/home");

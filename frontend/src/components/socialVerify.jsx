@@ -55,7 +55,7 @@ const ContarPalavraFuria = ({
         setIsModalOpen(true);
 
         axios
-          .patch(`http://127.0.0.1:5000/verify/${cpf}`)
+          .patch(`https://furia-test-ashy.vercel.app/verify/${cpf}`)
           .then((response) => {
             setUserData?.(response.data);
           })

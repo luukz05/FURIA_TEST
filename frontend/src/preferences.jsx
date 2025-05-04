@@ -79,9 +79,12 @@ export default function FanForm() {
     }
 
     try {
-      const response = await axios.patch(`http://127.0.0.1:5000/users/${cpf}`, {
-        interests: formData,
-      });
+      const response = await axios.patch(
+        `https://furia-test-ashy.vercel.app/users/${cpf}`,
+        {
+          interests: formData,
+        }
+      );
 
       console.log("Usuário atualizado:", response.data);
       setModalMessage("Formulário enviado com sucesso!");

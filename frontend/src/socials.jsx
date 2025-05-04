@@ -76,7 +76,7 @@ const SocialForm = () => {
 
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5000/socials/${cpf}`,
+        `https://furia-test-ashy.vercel.app/socials/${cpf}`,
         { socials: formData }
       );
 
