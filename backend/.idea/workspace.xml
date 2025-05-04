@@ -5,19 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bf551d0-a6e3-44a7-911f-ee793237e27b" name="Changes" comment="add">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/chat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/chat.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/cpfConfirm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/cpfConfirm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/socialVerify.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/socialVerify.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/furiometroPROD.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/furiometroPROD.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/loja.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/loja.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/preferences.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/preferences.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/quiz.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/quiz.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/register.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/socials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/socials.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

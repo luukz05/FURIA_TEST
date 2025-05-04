@@ -297,25 +297,31 @@ def register():
 def login():
     try:
         data = request.get_json()
-        print("Dados recebidos:", data)
+        print("Dados recebidos:", data)  # Log dos dados recebidos
 
         if not data or 'cpf' not in data or 'password' not in data:
+            print("Campos faltando no request:", data)
             return jsonify({'error': 'CPF e senha são obrigatórios'}), 400
 
+        # Conectar ao MongoDB e buscar o usuário
         user = mongo.db.users.find_one({'cpf': data['cpf']})
-        print("Usuário encontrado:", user)
+        print("Usuário encontrado:", user)  # Log do usuário encontrado no banco
 
         if not user:
             return jsonify({'error': 'Usuário não encontrado'}), 404
 
+        # Verificar senha
         if not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
             return jsonify({'error': 'Senha incorreta'}), 401
 
+        # Gerar token JWT
         token = jwt.encode({'cpf': user['cpf']}, 'segredo', algorithm='HS256')
+        print("Token gerado:", token)  # Log do token gerado
+
         return jsonify({'token': token})
 
     except Exception as e:
-        print("Erro no login:", e)
+        print("Erro no login:", e)  # Log de erro completo
         return jsonify({'error': 'Erro interno'}), 500
 
 
