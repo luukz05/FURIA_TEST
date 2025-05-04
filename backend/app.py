@@ -264,33 +264,59 @@ def register():
 
 
 # Rota de Login
+# @app.route('/login', methods=['POST'])
+# def login():
+#     data = request.get_json()
+#     cpf = data.get('cpf')
+#     password = data.get('password')
+#
+#     user = mongo.db.users.find_one({"cpf": cpf})
+#     if not user:
+#         return jsonify({"message": "Usuário não encontrado."}), 404
+#
+#     # Verificar senha
+#     if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+#         return jsonify({"message": "Senha incorreta."}), 400
+#
+#     # Criar e salvar o token
+#     token = create_token(user['_id'])
+#
+#     # Armazenar o token na sessão do banco de dados
+#     mongo.db.sessions.insert_one({
+#         "user_id": user['_id'],
+#         "token": token,
+#         "created_at": datetime.utcnow()
+#     })
+#
+#     # Enviar o token como cookie HTTPOnly
+#     response = make_response(jsonify({"message": "Login bem-sucedido", "token": token}), 200)
+#     return response
+
+
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    cpf = data.get('cpf')
-    password = data.get('password')
+    try:
+        data = request.get_json()
+        print("Dados recebidos:", data)
 
-    user = mongo.db.users.find_one({"cpf": cpf})
-    if not user:
-        return jsonify({"message": "Usuário não encontrado."}), 404
+        if not data or 'cpf' not in data or 'password' not in data:
+            return jsonify({'error': 'CPF e senha são obrigatórios'}), 400
 
-    # Verificar senha
-    if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        return jsonify({"message": "Senha incorreta."}), 400
+        user = mongo.db.users.find_one({'cpf': data['cpf']})
+        print("Usuário encontrado:", user)
 
-    # Criar e salvar o token
-    token = create_token(user['_id'])
+        if not user:
+            return jsonify({'error': 'Usuário não encontrado'}), 404
 
-    # Armazenar o token na sessão do banco de dados
-    mongo.db.sessions.insert_one({
-        "user_id": user['_id'],
-        "token": token,
-        "created_at": datetime.utcnow()
-    })
+        if not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
+            return jsonify({'error': 'Senha incorreta'}), 401
 
-    # Enviar o token como cookie HTTPOnly
-    response = make_response(jsonify({"message": "Login bem-sucedido", "token": token}), 200)
-    return response
+        token = jwt.encode({'cpf': user['cpf']}, 'segredo', algorithm='HS256')
+        return jsonify({'token': token})
+
+    except Exception as e:
+        print("Erro no login:", e)
+        return jsonify({'error': 'Erro interno'}), 500
 
 
 @app.route('/socials/<cpf>', methods=['PATCH'])

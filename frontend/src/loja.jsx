@@ -109,7 +109,7 @@ const StorePage = () => {
 
     // Buscar os dados do usuário
     axios
-      .get(`http://127.0.0.1:5000/user/${storedCpf}`)
+      .get(`https://furiatest-production.up.railway.app/user/${storedCpf}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         setMessage(
