@@ -40,17 +40,12 @@ export default function Login() {
         },
         { withCredentials: true }
       );
-      console.log(response); // Verifique a resposta aqui
 
       if (response.status === 200) {
         cookie.save("cpf", cpf.replace(/\D/g, ""), { path: "/" });
-        localStorage.setItem("userToken", response.data.token);
-
-        navigate("/fanform");
-        // Exibir mensagem de sucesso
+        localStorage.setItem("userToken", response.data.token); // Assumindo que backend retorna o token
         setMessage("Login bem-sucedido!");
-
-        navigate("/home");
+        navigate("/home"); // ou "/fanform", se for o correto
       } else {
         setMessage("Erro ao fazer login. Tente novamente.");
       }

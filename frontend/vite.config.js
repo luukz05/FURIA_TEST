@@ -11,4 +11,5 @@ export default defineConfig({
       "vast-dingo-slightly.ngrok-free.app", // Adicione a URL do seu ngrok aqui
     ],
   },
+  base: "/", // mantém as rotas funcionando corretamente
 });
