@@ -86,7 +86,7 @@ furia-qg/
 ### 🔧 Clone o repositório:
 
 ```bash
-git clone https://github.com/seuusuario/furia-qg.git
+https://github.com/luukz05/FURIA_TEST.git
 cd furia-qg
 ```
 
