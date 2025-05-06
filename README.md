@@ -1,4 +1,3 @@
-
 # 🐾 FURIA QG – Plataforma de Engajamento para Fãs
 
 Bem-vindo ao **QG da FURIA**, a central de **missões, desafios e recompensas** da torcida mais furiosa do Brasil. Este projeto é uma **plataforma web fullstack** criada para aproximar os fãs da organização FURIA por meio de **interatividade, gamificação, chat global, rankings e comunidade ativa**.
@@ -8,7 +7,6 @@ Bem-vindo ao **QG da FURIA**, a central de **missões, desafios e recompensas** 
 ## 📸 Preview
 
 ![Preview da Plataforma](https://cdn.discordapp.com/attachments/968229431988604940/1368712816479047831/Captura_de_tela_2025-05-04_192014.png?ex=681938a4&is=6817e724&hm=60f60c7873ecfaa4ecf4112a317eea008dc6dd16b94769edad32763be8869e86&)
-
 
 ---
 
@@ -109,6 +107,77 @@ python app.py
 ```
 
 > Certifique-se de ter o **MongoDB** local rodando e o **Tesseract OCR** instalado no sistema.
+
+---
+
+## 🧠 Instalação do Tesseract OCR
+
+Para que a funcionalidade de **leitura de CPF por imagem** funcione corretamente, é necessário instalar o **Tesseract OCR**, uma engine de reconhecimento óptico de caracteres utilizada com a biblioteca `pytesseract`.
+
+### 🔽 Instalar o Tesseract
+
+#### 🪟 Windows
+
+1. Acesse: [https://github.com/tesseract-ocr/tesseract](https://github.com/tesseract-ocr/tesseract)
+2. Baixe o instalador da versão mais recente para Windows.
+3. Durante a instalação, **marque o idioma português (por)** se disponível.
+4. Após instalar, **adicione o caminho de instalação** à variável de ambiente `PATH`.
+
+   Exemplo:
+   ```
+   C:\Program Files\Tesseract-OCR
+   ```
+
+#### 🐧 Linux (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install tesseract-ocr
+sudo apt install tesseract-ocr-por  # Instala suporte ao idioma português
+```
+
+#### 🍎 macOS (com Homebrew)
+
+```bash
+brew install tesseract
+brew install tesseract-lang  # Para instalar idiomas adicionais, como português
+```
+
+---
+
+### 🧪 Testando a Instalação
+
+Para verificar se a instalação foi bem-sucedida, execute no terminal:
+
+```bash
+tesseract --version
+```
+
+Se estiver instalado corretamente, será exibida a versão atual do Tesseract.
+
+---
+
+### 📦 Requisitos Python
+
+A funcionalidade de OCR utiliza as bibliotecas Python abaixo:
+
+- `pytesseract` – Interface Python para o Tesseract OCR
+- `Pillow` – Manipulação de imagens
+
+Instale com:
+
+```bash
+pip install pytesseract pillow
+```
+
+No código Python, especifique o caminho do executável do Tesseract caso necessário:
+
+```python
+import pytesseract
+
+# Exemplo para Windows:
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+```
 
 ---
 
